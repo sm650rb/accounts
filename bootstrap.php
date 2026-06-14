@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-$root = dirname(__DIR__);
+$root = __DIR__;
 
 $autoload = $root . '/vendor/autoload.php';
 if (is_readable($autoload)) {
     require $autoload;
 } else {
     // PHPMailer optional until `composer install` on server
-    spl_autoload_register(static function (string $class): void {
+    spl_autoload_register(static function (string $class) use ($root): void {
         if (!str_starts_with($class, 'RbAcc\\')) {
             return;
         }
-        $file = dirname(__DIR__) . '/src/' . substr($class, 6) . '.php';
+        $file = $root . '/src/' . substr($class, 6) . '.php';
         if (is_readable($file)) {
             require $file;
         }

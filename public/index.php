@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+// PHP built-in server: serve existing files in public/ (css, js, img)
+if (PHP_SAPI === 'cli-server') {
+    $staticPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+    $staticFile = __DIR__ . $staticPath;
+    if ($staticPath !== '/' && is_file($staticFile)) {
+        return false;
+    }
+}
+
 require dirname(__DIR__) . '/bootstrap.php';
 
 use RbAcc\Api;

@@ -38,7 +38,7 @@ final class Api
                 'message' => 'Signed in',
             ]);
         } catch (SignInException $e) {
-            Http::error($e->getMessage(), $e->code === 'suspended' ? 403 : 401);
+            Http::error($e->getMessage(), $e->errorCode === 'suspended' ? 403 : 401);
         }
     }
 
@@ -303,7 +303,7 @@ final class Api
             Auth::signIn((int) $member['id']);
             Http::redirect(Config::appUrl() . '/');
         } catch (SignInException $e) {
-            Http::redirect($base . '?error=' . ($e->code === 'suspended' ? 'suspended' : 'google_failed'));
+            Http::redirect($base . '?error=' . ($e->errorCode === 'suspended' ? 'suspended' : 'google_failed'));
         } catch (\Throwable $e) {
             error_log('[google-oauth] ' . $e->getMessage());
             Http::redirect($base . '?error=google_failed');

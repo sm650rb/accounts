@@ -5,10 +5,7 @@ declare(strict_types=1);
 
 require dirname(__DIR__) . '/bootstrap.php';
 
-use RbAcc\Config;
 use RbAcc\Database;
-
-Config::load(dirname(__DIR__));
 
 if (getenv('SKIP_DB_MIGRATE') === '1') {
     echo "[db] SKIP_DB_MIGRATE=1\n";
@@ -28,7 +25,7 @@ foreach ($pdo->query('SELECT id FROM _schema_migrations') as $row) {
     $applied[$row['id']] = true;
 }
 
-$dir = dirname(__DIR__) . '/sql/migrations';
+$dir = __DIR__ . '/../sql/migrations';
 $files = glob($dir . '/*.sql') ?: [];
 sort($files);
 
