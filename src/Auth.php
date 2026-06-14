@@ -63,8 +63,16 @@ final class Auth
 
 final class SignInException extends \RuntimeException
 {
-    public function __construct(string $message, public readonly string $errorCode)
+    private string $errorCode;
+
+    public function __construct(string $message, string $errorCode)
     {
         parent::__construct($message);
+        $this->errorCode = $errorCode;
+    }
+
+    public function getErrorCode(): string
+    {
+        return $this->errorCode;
     }
 }

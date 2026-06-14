@@ -2,7 +2,7 @@
   "name": "sm650rb/accounts",
   "description": "Road Burners member account portal (PHP)",
   "require": {
-    "php": ">=8.1",
+    "php": ">=8.0",
     "phpmailer/phpmailer": "^6.9"
   },
   "autoload": {
