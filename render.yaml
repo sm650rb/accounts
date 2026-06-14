@@ -1,0 +1,45 @@
+# Render blueprint — acc.sm650.com (Next.js standalone + Serverbyt MySQL)
+# Connect repo at https://dashboard.render.com → New → Blueprint
+services:
+  - type: web
+    name: acc-portal
+    runtime: node
+    region: frankfurt
+    plan: starter
+    buildCommand: SKIP_DB_MIGRATE=1 DB_HOST=127.0.0.1 DB_NAME=build DB_USER=build DB_PASSWORD=build SESSION_SECRET=build-only-minimum-32-characters-long npm ci && npm run build:render
+    startCommand: npm run start:render
+    healthCheckPath: /login
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOSTNAME
+        value: 0.0.0.0
+      - key: APP_URL
+        value: https://acc.sm650.com
+      # Remote MySQL — StackCP → Web Tools → Remote MySQL Access
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM
+        value: "Road Burners <sm650rb@gmail.com>"
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
